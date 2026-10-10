@@ -1,0 +1,71 @@
+#:schema https://raw.githubusercontent.com/YunoHost/apps/master/schemas/manifest.v2.schema.json
+
+packaging_format = 2
+
+id = "donetick"
+name = "Donetick"
+description.en = "Managing tasks and chores"
+description.fr = "Gestion des tâches et des corvées"
+
+version = "0.1.80~ynh1"
+
+maintainers = ["eric_G"]
+
+[upstream]
+license = "AGPL-3.0"
+website = "https://donetick.com/"
+demo = "https://app.donetick.com/login"
+admindoc = "https://docs.donetick.com/getting-started/"
+code = "https://github.com/donetick/donetick"
+
+[integration]
+yunohost = ">= 12.1.40"
+helpers_version = "2.1"
+architectures = "all"
+multi_instance = true
+
+ldap = false
+sso = false
+
+disk = "50M"
+ram.build = "50M"
+ram.runtime = "50M"
+
+[install]
+    [install.domain]
+    type = "domain"
+
+    [install.init_main_permission]
+    type = "group"
+    default = "visitors"
+
+[resources]
+
+    [resources.sources]
+
+    [resources.sources.main]
+    amd64.url = "https://github.com/donetick/donetick/releases/download/v0.1.80/donetick_Linux_x86_64.tar.gz"
+    amd64.sha256 = "a843d896dcb370aa6f8e1c7c43b3919852be12e1819ec8995a6bf2af1fcead19"
+    arm64.url = "https://github.com/donetick/donetick/releases/download/v0.1.80/donetick_Linux_arm64.tar.gz"
+    arm64.sha256 = "f953950d40eb381fbc5a6d810ccfcd5c23a7ed8dc21cea1355f2a8bbfc39f581"
+    armhf.url = "https://github.com/donetick/donetick/releases/download/v0.1.80/donetick_Linux_armv7.tar.gz"
+    armhf.sha256 = "123bfa70964255ee012216d09ff790f400eb855b72fcfb85d5630d03f51cc4e4"
+    in_subdir = false
+
+    # autoupdate.strategy = "latest_github_tag"
+
+    [resources.system_user]
+
+    [resources.install_dir]
+
+    [resources.permissions]
+    main.url = "/"
+
+    [resources.ports]
+    main.default = 2021
+
+    [resources.apt]
+    packages = "postgresql"
+
+    [resources.database]
+    type = "postgresql"

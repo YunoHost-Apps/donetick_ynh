@@ -22,7 +22,7 @@ code = "https://github.com/donetick/donetick"
 yunohost = ">= 12.1.40"
 helpers_version = "2.1"
 architectures = "all"
-multi_instance = true
+multi_instance = false
 
 ldap = false
 sso = false

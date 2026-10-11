@@ -58,7 +58,8 @@ ram.runtime = "100M"
     autoupdate.asset.arm64 = "^donetick_Linux_armv7.tar.gz$"
 
     [resources.system_user]
-
+    allow_email = true
+    
     [resources.install_dir]
 
     [resources.permissions]

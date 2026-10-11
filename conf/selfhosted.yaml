@@ -47,7 +47,7 @@ email:
   port: 25
   key: __MAIL_PWD__
   email: donetick@__DOMAIN__
-  user: __ADMIN__ # optional, will be filled with email.email if not set.
+  user: __APP__ # optional, will be filled with email.email if not set.
   app_host:
   log_raw_url: true # log password reset URL to console (useful when email is not configured)
 oauth2:

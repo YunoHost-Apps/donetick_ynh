@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 User=__APP__
 Group=__APP__
-Environment:DT_ENV=selfhosted
+Environment="DT_ENV=selfhosted"
 WorkingDirectory=__INSTALL_DIR__/
 ExecStart=__INSTALL_DIR__/donetick
 

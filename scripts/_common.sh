@@ -21,20 +21,16 @@ _migrate_sqlite_to_psql() {
     fi
 
     pgloader /dev/stdin <<< "
-load database
-     from sqlite://$install_dir/donetick.db
-     into postgresql://$db_user:$db_pwd@127.0.0.1:5432/$db_name
+LOAD DATABASE
+     FROM sqlite://$install_dir/donetick.db
+     INTO postgresql://$db_user:$db_pwd@127.0.0.1:5432/$db_name
 
-cast
-     column chores.frequency_meta_v2 to text
-     column chores.notification_meta_v2 to text
-     column filters.conditions to text
-     column notifications.raw_event to text
-     column time_sessions.pause_log to text
-
-with include no drop, truncate, create no tables, create no indexes,
+WITH include no drop, truncate, create no tables, create no indexes,
      preserve index names, no foreign keys, data only, workers = 8,
      concurrency = 1
+
+CAST type json to text,
+     type jsonb to text
 ;"
 
     ynh_safe_rm "$install_dir/donetick.db"

@@ -50,11 +50,11 @@ ram.runtime = "100M"
     help.fr = "Le mot de passe doit compter entre 8 et 64 caractères"
 
     [install.is_single_circle_instance]
-    ask.en = "Single-Circle Instance mode"
+    ask.en = "Single-circle mode"
     ask.fr = "Mode cercle unique"
     type = "boolean"
-    help.en = "Hide the circles interface and set a unique circle for all users. It can be helful typically for a household-dedicated instance."
-    help.fr = "Cacher l'interface des cercles et utiliser un cercle unique pour tous les utilisateurs. Cela peut être utile typiquement pour une instance dédiée à un foyer."
+    help.en = "Next users created will be linked to the same circle than the admin user instead of having their own circle created by default. It can be helful typically for a small household-dedicated instance."
+    help.fr = "Les prochains utilisateurs créés appartiendront au même cercle que le premier utilisateur admin au lieu de se voir créer leur propre cercle par défaut. Cela peut être utile typiquement pour une petite instance dédiée à un foyer."
     default = 0
     yes = "true"
     no = "false"

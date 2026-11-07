@@ -4,13 +4,13 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
+source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
 # INITIALIZE AND STORE SETTINGS
 #=================================================
 admin_email=$(ynh_user_get_info --username="$admin" --key=mail)
-admin_password_hash=$(htpasswd -bnBC 10 "" "$password" | tr -d ':\n' | sed 's/$2y/$2a/') #cf. https://unix.stackexchange.com/questions/307994/compute-bcrypt-hash-from-command-line/419855#419855
 jwt_secret=$(ynh_string_random --length=32)
 circle_invite_code=$(ynh_string_random --length=16)
 is_single_circle_instance=false
@@ -63,6 +63,9 @@ ynh_script_progression "Adding first user to database..."
 
 # Give it a moment so that database schema is fully created at service start
 sleep 5
+
+# Hash admin password (requires apt python3-bcrypt dep which is installed only after source setup)
+admin_password_hash=$(myynh_bcrypt_password "$password" | sed 's/$2b/$2a/') #donetick's default prefix is '$2a'
 
 # Insert first user and first circle entries in database
 # cf. https://github.com/donetick/donetick/blob/ebfb340d7bd4e2e009d6f2f9ad073868acaf6412/internal/user/handler.go

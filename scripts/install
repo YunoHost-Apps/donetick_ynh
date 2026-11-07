@@ -9,8 +9,11 @@ source /usr/share/yunohost/helpers
 #=================================================
 # INITIALIZE AND STORE SETTINGS
 #=================================================
-
-key=$(ynh_string_random --length=32)
+admin_email=$(ynh_user_get_info --username="$admin" --key=mail)
+admin_password_hash=$(htpasswd -bnBC 10 "" "$password" | tr -d ':\n' | sed 's/$2y/$2a/') #cf. https://unix.stackexchange.com/questions/307994/compute-bcrypt-hash-from-command-line/419855#419855
+jwt_secret=$(ynh_string_random --length=32)
+circle_invite_code=$(ynh_string_random --length=16)
+is_single_circle_instance=false
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -27,7 +30,10 @@ chmod +x "$install_dir/donetick"
 #=================================================
 ynh_script_progression "Adding $app's configuration files..."
 
+ynh_config_add --template=".env" --destination="$install_dir/config/.env"
 ynh_config_add --template="selfhosted.yaml" --destination="$install_dir/config/selfhosted.yaml"
+
+chown "$app:$app" "$install_dir"
 
 #=================================================
 # SYSTEM CONFIGURATION
@@ -49,6 +55,57 @@ ynh_script_progression "Starting $app's systemd service..."
 
 # Start a systemd service
 ynh_systemctl --service="$app" --action="start"
+
+#=================================================
+# DATABASE CONFIGURATION
+#=================================================
+ynh_script_progression "Adding first user to database..."
+
+# Give it a moment so that database schema is fully created at service start
+sleep 5
+
+# Insert first user and first circle entries in database
+# cf. https://github.com/donetick/donetick/blob/ebfb340d7bd4e2e009d6f2f9ad073868acaf6412/internal/user/handler.go
+ynh_psql_db_shell <<< "
+INSERT INTO users (
+	  display_name, username, email, provider, password,
+	  circle_id, chat_id, image, timezone, parent_user_id,
+	  user_type, mfa_enabled, mfa_secret, mfa_backup_codes,
+	  mfa_recovery_codes_used, created_at, updated_at, disabled,
+	  customer_id, subscription, expiration
+	) VALUES (
+	  '$admin', '$admin', '$admin_email', 0, '$admin_password_hash',
+	  1, 0, NULL, NULL, NULL,
+	  0, FALSE, NULL, NULL,
+	  '[]'::text, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE,
+	  NULL, NULL, NULL
+);
+"
+ynh_psql_db_shell <<< "
+INSERT INTO circles (
+	  name, created_by, created_at, updated_at,
+	  invite_code, disabled, webhook_url, status, expired_at
+	) VALUES (
+	  '$admin''s circle', 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP,
+	  '$circle_invite_code', FALSE, NULL, NULL, NULL
+);
+"
+ynh_psql_db_shell <<< "
+INSERT INTO user_circles (
+	  user_id, circle_id, role, is_active,
+	  created_at, updated_at, points, points_redeemed
+	) VALUES (
+	  1, 1, 'admin', TRUE,
+	  CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0, 0
+);
+"
+ynh_psql_db_shell <<< "
+INSERT INTO storage_usages (
+	  user_id, circle_id, used_bytes, updated_at
+	) VALUES (
+	  1, 1, 0, CURRENT_TIMESTAMP
+);
+"
 
 #=================================================
 # END OF SCRIPT

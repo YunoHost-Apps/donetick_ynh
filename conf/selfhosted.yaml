@@ -15,7 +15,7 @@ database:
   password: "__DB_PWD__"
   name: "__DB_NAME__"
 jwt:
-  secret: "__KEY__"
+  secret: "__JWT_SECRET__"
   session_time: 168h # 7 days
   max_refresh: 1440h # 60 days 
 server:
@@ -67,7 +67,7 @@ oauth2:
 # Single-circle instance mode (optional).
 # When true, disables circle join/leave endpoints and adds new OIDC users
 # to a shared household circle instead of creating personal circles.
-# single_circle_instance: false
+# single_circle_instance: __IS_SINGLE_CIRCLE_INSTANCE__ #setting managed via env variable instead than in selfhosted.yaml
 # SSO-only mode (optional).
 # When true, all password-based auth (signup, login, reset) is rejected and
 # the login UI hides the password form.

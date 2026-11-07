@@ -4,6 +4,7 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
+source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -14,25 +15,26 @@ ynh_script_progression "Stopping $app's systemd service..."
 ynh_systemctl --service="$app" --action="stop"
 
 #=================================================
+# ENSURE DOWNWARD COMPATIBILITY
+#=================================================
+# Since v0.1.86~ynh1
+is_single_circle_instance=${is_single_circle_instance:-false}
+
+#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression "Upgrading source files..."
 
-ynh_setup_source --dest_dir="$install_dir" --full_replace --keep="config/selfhosted.yaml"
+ynh_setup_source --dest_dir="$install_dir" --full_replace --keep="config/selfhosted.yaml donetick.db" #`donetick.db` should not be here anymore from v0.1.86~ynh1 onwards (DB migrated to PGSQL)
 
 chmod +x "$install_dir/donetick"
-
-#=================================================
-# UPDATE A CONFIG FILE
-#=================================================
-#ynh_script_progression "Updating $app's configuration files..."
-
-#ynh_config_add --template="selfhosted.yaml" --destination="$install_dir/config/selfhosted.yaml"
 
 #=================================================
 # REAPPLY SYSTEM CONFIGURATION
 #=================================================
 ynh_script_progression "Upgrading system configurations related to $app..."
+
+ynh_config_add --template=".env" --destination="$install_dir/config/.env"
 
 ynh_config_add_nginx
 
@@ -40,12 +42,25 @@ ynh_config_add_systemd
 
 yunohost service add "$app" --description="Managing tasks and chores" --log="/var/log/$app/$app.log"
 
+chown "$app:$app" "$install_dir"
+
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
 ynh_systemctl --service="$app" --action="start"
+
+#=================================================
+# MIGRATE DATABASE (once after 0.1.80~ynh1)
+#=================================================
+
+if ynh_app_upgrading_from_version_before_or_equal_to "0.1.80~ynh1"; then
+    ynh_print_info "Migration to a PostgreSQL database..."
+    # Give it a moment so that database schema is fully created at service start
+    sleep 5
+    _migrate_sqlite_to_psql
+fi
 
 #=================================================
 # END OF SCRIPT

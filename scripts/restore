@@ -13,6 +13,9 @@ ynh_script_progression "Restoring the app main directory..."
 
 ynh_restore "$install_dir"
 
+chmod +x "$install_dir/donetick"
+chown "$app:$app" "$install_dir"
+
 #=================================================
 # RESTORE THE DATABASE
 #=================================================

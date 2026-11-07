@@ -1,0 +1,20 @@
+#:schema https://github.com/YunoHost/apps/raw/main/schemas/config_panel.v1.schema.json
+
+version = "1.0"
+
+[main]
+name.en = "Main configuration"
+name.fr = "Configuration principale"
+services = ["donetick"]
+
+    [main.customization]
+
+        [main.customization.is_single_circle_instance]
+        ask.en = "Single-circle mode"
+        ask.fr = "Mode cercle unique"
+        type = "boolean"
+        help.en = "Newly created users will be linked to the same circle than the first user instead of having their own circle created by default. It can be helful typically for a small household-dedicated instance."
+        help.fr = "Les nouveaux utilisateurs créés appartiendront au même cercle que le premier utilisateur au lieu de se voir créer leur propre cercle par défaut. Cela peut être utile typiquement pour une petite instance dédiée à un foyer."
+        yes = "true"
+        no = "false"
+		bind = "DT_SINGLE_CIRCLE_INSTANCE:__INSTALL_DIR__/config/.env"

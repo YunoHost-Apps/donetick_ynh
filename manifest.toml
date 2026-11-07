@@ -64,18 +64,18 @@ ram.runtime = "100M"
     [resources.sources]
 
     [resources.sources.main]
+    in_subdir = false
     amd64.url = "https://github.com/donetick/donetick/releases/download/v0.1.86/donetick_Linux_x86_64.tar.gz"
     amd64.sha256 = "ef96027fbf2ad078ef7b8d7bacbf228d777265084ffd0f1b19f9941977fc9da8"
     arm64.url = "https://github.com/donetick/donetick/releases/download/v0.1.86/donetick_Linux_arm64.tar.gz"
     arm64.sha256 = "4ca35e958e94991c6d27231ff9e3dab822482169e90c88fc1b4c7b65e8e5afad"
     armhf.url = "https://github.com/donetick/donetick/releases/download/v0.1.86/donetick_Linux_armv7.tar.gz"
     armhf.sha256 = "50602010c42b34de03275ebf007beedf608f92d65b6b3117508701dffaf7eaaa"
-    in_subdir = false
 
     autoupdate.strategy = "latest_github_release"
-    autoupdate.asset.amd64 = ".*_Linux_x86_64.tar.gz"
-    autoupdate.asset.arm64 = ".*_Linux_arm64.tar.gz"
-    autoupdate.asset.armhf = ".*_Linux_armv7.tar.gz"
+    autoupdate.asset.amd64 = "^donetick_Linux_x86_64.tar.gz$"
+    autoupdate.asset.arm64 = "^donetick_Linux_arm64.tar.gz$"
+    autoupdate.asset.arm64 = "^donetick_Linux_armv7.tar.gz$"
 
     [resources.system_user]
 

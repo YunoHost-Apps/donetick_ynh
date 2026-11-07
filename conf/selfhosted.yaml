@@ -15,7 +15,7 @@ database:
   password: "__DB_PWD__"
   name: "__DB_NAME__"
 jwt:
-  secret: "__KEY__"
+  secret: "__JWT_SECRET__"
   session_time: 168h # 7 days
   max_refresh: 1440h # 60 days 
 server:

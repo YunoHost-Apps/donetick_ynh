@@ -5,8 +5,6 @@
 #=================================================
 
 _migrate_sqlite_to_psql() {
-    ynh_print_info "Migration to a PostgreSQL database..."
-
     if [ ! -f "$install_dir/donetick.db" ]; then
         ynh_print_warn "SQLite DB not found, cancelling migration."
         return

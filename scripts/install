@@ -62,7 +62,7 @@ ynh_systemctl --service="$app" --action="start"
 ynh_script_progression "Adding first user to database..."
 
 # Give it a moment so that database schema is fully created at service start
-sleep 1
+sleep 5
 
 # Insert first user and first circle entries in database
 # cf. https://github.com/donetick/donetick/blob/ebfb340d7bd4e2e009d6f2f9ad073868acaf6412/internal/user/handler.go

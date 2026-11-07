@@ -56,8 +56,9 @@ ynh_systemctl --service="$app" --action="start"
 #=================================================
 
 if ynh_app_upgrading_from_version_before_or_equal_to "0.1.80~ynh1"; then
+    ynh_print_info "Migration to a PostgreSQL database..."
     # Give it a moment so that database schema is fully created at service start
-    sleep 1
+    sleep 5
     _migrate_sqlite_to_psql
 fi
 

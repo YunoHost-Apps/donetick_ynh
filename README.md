@@ -12,7 +12,7 @@ Managing tasks and chores
 
 [![🌐 Official app website](https://img.shields.io/badge/Official_app_website-darkgreen?style=for-the-badge)](https://donetick.com/)
 [![App Demo](https://img.shields.io/badge/App_Demo-blue?style=for-the-badge)](https://app.donetick.com/login)
-[![Version: 0.1.80~ynh1](https://img.shields.io/badge/Version-0.1.80~ynh1-rgb(18,138,11)?style=for-the-badge)](https://ci-apps.yunohost.org/ci/apps/donetick/)
+[![Version: 0.1.80~ynh2](https://img.shields.io/badge/Version-0.1.80~ynh2-rgb(18,138,11)?style=for-the-badge)](https://ci-apps.yunohost.org/ci/apps/donetick/)
 
 <div align="center">
 <a href="https://apps.yunohost.org/app/donetick"><img height="100px" src="https://github.com/YunoHost/yunohost-artwork/raw/refs/heads/main/badges/neopossum-badges/badge_more_info_on_the_appstore.svg"/></a>

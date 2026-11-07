@@ -7,7 +7,7 @@ name = "Donetick"
 description.en = "Managing tasks and chores"
 description.fr = "Gestion des tâches et des corvées"
 
-version = "0.1.80~ynh1"
+version = "0.1.86~ynh1"
 
 maintainers = ["eric_G"]
 
@@ -22,7 +22,7 @@ code = "https://github.com/donetick/donetick"
 yunohost = ">= 12.1.40"
 helpers_version = "2.1"
 architectures = "all"
-multi_instance = false
+multi_instance = true
 
 ldap = false
 sso = false
@@ -39,20 +39,33 @@ ram.runtime = "100M"
     type = "group"
     default = "visitors"
 
+    [install.admin]
+    type = "user"
+    help.en = "The username must include between 4 and 20 characters and only lowercase (a-z), figures (0-9), dots (.) or dashes (-)"
+    help.fr = "Le nom d'utilisateur doit compter entre 4 et 20 caractères, uniquement des minuscules (a-z), des chiffres (0-9), points (.) ou des tirets (-)"
+
+    [install.password]
+    type = "password"
+    help.en = "The password must include between 8 and 64 characters"
+    help.fr = "Le mot de passe doit compter entre 8 et 64 caractères"
+
 [resources]
 
     [resources.sources]
 
     [resources.sources.main]
-    amd64.url = "https://github.com/donetick/donetick/releases/download/v0.1.80/donetick_Linux_x86_64.tar.gz"
-    amd64.sha256 = "a843d896dcb370aa6f8e1c7c43b3919852be12e1819ec8995a6bf2af1fcead19"
-    arm64.url = "https://github.com/donetick/donetick/releases/download/v0.1.80/donetick_Linux_arm64.tar.gz"
-    arm64.sha256 = "f953950d40eb381fbc5a6d810ccfcd5c23a7ed8dc21cea1355f2a8bbfc39f581"
-    armhf.url = "https://github.com/donetick/donetick/releases/download/v0.1.80/donetick_Linux_armv7.tar.gz"
-    armhf.sha256 = "123bfa70964255ee012216d09ff790f400eb855b72fcfb85d5630d03f51cc4e4"
+    amd64.url = "https://github.com/donetick/donetick/releases/download/v0.1.86/donetick_Linux_x86_64.tar.gz"
+    amd64.sha256 = "ef96027fbf2ad078ef7b8d7bacbf228d777265084ffd0f1b19f9941977fc9da8"
+    arm64.url = "https://github.com/donetick/donetick/releases/download/v0.1.86/donetick_Linux_arm64.tar.gz"
+    arm64.sha256 = "4ca35e958e94991c6d27231ff9e3dab822482169e90c88fc1b4c7b65e8e5afad"
+    armhf.url = "https://github.com/donetick/donetick/releases/download/v0.1.86/donetick_Linux_armv7.tar.gz"
+    armhf.sha256 = "50602010c42b34de03275ebf007beedf608f92d65b6b3117508701dffaf7eaaa"
     in_subdir = false
 
-    # autoupdate.strategy = "latest_github_tag"
+    autoupdate.strategy = "latest_github_release"
+    autoupdate.asset.amd64 = ".*_x86_64.tar.gz"
+    autoupdate.asset.arm64 = ".*_arm64.tar.gz"
+    autoupdate.asset.armhf = ".*_armv7.tar.gz"
 
     [resources.system_user]
 

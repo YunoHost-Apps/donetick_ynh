@@ -49,6 +49,16 @@ ram.runtime = "100M"
     help.en = "The password must include between 8 and 64 characters"
     help.fr = "Le mot de passe doit compter entre 8 et 64 caractères"
 
+    [install.is_single_circle_instance]
+    ask.en = "Single-Circle Instance mode"
+    ask.fr = "Mode cercle unique"
+    type = "boolean"
+    help.en = "Hide the circles interface and set a unique circle for all users. It can be helful typically for a household-dedicated instance."
+    help.fr = "Cacher l'interface des cercles et utiliser un cercle unique pour tous les utilisateurs. Cela peut être utile typiquement pour une instance dédiée à un foyer."
+    default = 0
+    yes = "true"
+    no = "false"
+
 [resources]
 
     [resources.sources]

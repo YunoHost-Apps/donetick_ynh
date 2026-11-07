@@ -11,9 +11,9 @@ source /usr/share/yunohost/helpers
 #=================================================
 admin_email=$(ynh_user_get_info --username="$admin" --key=mail)
 admin_password_hash=$(htpasswd -bnBC 10 "" "$password" | tr -d ':\n' | sed 's/$2y/$2a/') #cf. https://unix.stackexchange.com/questions/307994/compute-bcrypt-hash-from-command-line/419855#419855
-ynh_app_setting_set --key=admin_password_hash --value="$admin_password_hash"
 jwt_secret=$(ynh_string_random --length=32)
 circle_invite_code=$(ynh_string_random --length=16)
+is_single_circle_instance=false
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -30,7 +30,10 @@ chmod +x "$install_dir/donetick"
 #=================================================
 ynh_script_progression "Adding $app's configuration files..."
 
+ynh_config_add --template=".env" --destination="$install_dir/config/.env"
 ynh_config_add --template="selfhosted.yaml" --destination="$install_dir/config/selfhosted.yaml"
+
+chown "$app:$app" "$install_dir"
 
 #=================================================
 # SYSTEM CONFIGURATION

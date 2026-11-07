@@ -1,0 +1,20 @@
+#:schema https://github.com/YunoHost/apps/raw/main/schemas/config_panel.v1.schema.json
+
+version = "1.0"
+
+[main]
+name.en = "Main configuration"
+name.fr = "Configuration principale"
+services = ["donetick"]
+
+    [main.customization]
+
+        [main.customization.is_single_circle_instance]
+        ask.en = "Single-Circle Instance mode"
+        ask.fr = "Mode cercle unique"
+        type = "boolean"
+        help.en = "Hide the circles interface and set a unique circle for all users. It can be helful typically for a household-dedicated instance."
+        help.fr = "Cacher l'interface des cercles et utiliser un cercle unique pour tous les utilisateurs. Cela peut être utile typiquement pour une instance dédiée à un foyer."
+        yes = "true"
+        no = "false"
+		bind = "DT_SINGLE_CIRCLE_INSTANCE:__INSTALL_DIR__/config/.env"

@@ -15,11 +15,17 @@ ynh_script_progression "Stopping $app's systemd service..."
 ynh_systemctl --service="$app" --action="stop"
 
 #=================================================
+# ENSURE DOWNWARD COMPATIBILITY
+#=================================================
+# Since v0.1.86~ynh1
+is_single_circle_instance=${is_single_circle_instance:-false}
+
+#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression "Upgrading source files..."
 
-ynh_setup_source --dest_dir="$install_dir" --full_replace --keep="config/selfhosted.yaml config/.env donetick.db" # donetick.db is kept only if upgrade from "0.1.80~ynh1" or below as this file should not be here after migration to PSQL.
+ynh_setup_source --dest_dir="$install_dir" --full_replace --keep="config/selfhosted.yaml donetick.db" #`donetick.db` should not be here anymore from v0.1.86~ynh1 onwards (DB migrated to PGSQL)
 
 chmod +x "$install_dir/donetick"
 
@@ -28,11 +34,15 @@ chmod +x "$install_dir/donetick"
 #=================================================
 ynh_script_progression "Upgrading system configurations related to $app..."
 
+ynh_config_add --template=".env" --destination="$install_dir/config/.env"
+
 ynh_config_add_nginx
 
 ynh_config_add_systemd
 
 yunohost service add "$app" --description="Managing tasks and chores" --log="/var/log/$app/$app.log"
+
+chown "$app:$app" "$install_dir"
 
 #=================================================
 # START SYSTEMD SERVICE

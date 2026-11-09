@@ -13,7 +13,6 @@ source /usr/share/yunohost/helpers
 admin_email=$(ynh_user_get_info --username="$admin" --key=mail)
 jwt_secret=$(ynh_string_random --length=32)
 circle_invite_code=$(ynh_string_random --length=16)
-is_single_circle_instance=false
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE

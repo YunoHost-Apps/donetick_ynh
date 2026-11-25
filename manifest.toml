@@ -7,7 +7,7 @@ name = "Donetick"
 description.en = "Managing tasks and chores"
 description.fr = "Gestion des tâches et des corvées"
 
-version = "0.1.86~ynh1"
+version = "0.1.89~ynh1"
 
 maintainers = ["eric_G"]
 
@@ -65,12 +65,12 @@ ram.runtime = "100M"
 
     [resources.sources.main]
     in_subdir = false
-    amd64.url = "https://github.com/donetick/donetick/releases/download/v0.1.86/donetick_Linux_x86_64.tar.gz"
-    amd64.sha256 = "ef96027fbf2ad078ef7b8d7bacbf228d777265084ffd0f1b19f9941977fc9da8"
-    arm64.url = "https://github.com/donetick/donetick/releases/download/v0.1.86/donetick_Linux_arm64.tar.gz"
-    arm64.sha256 = "4ca35e958e94991c6d27231ff9e3dab822482169e90c88fc1b4c7b65e8e5afad"
-    armhf.url = "https://github.com/donetick/donetick/releases/download/v0.1.86/donetick_Linux_armv7.tar.gz"
-    armhf.sha256 = "50602010c42b34de03275ebf007beedf608f92d65b6b3117508701dffaf7eaaa"
+    amd64.url = "https://github.com/donetick/donetick/releases/download/v0.1.89/donetick_Linux_x86_64.tar.gz"
+    amd64.sha256 = "fea117709f29fd354c37fea09c707a9b134b58eff15825cbcf66acc02c42f90b"
+    arm64.url = "https://github.com/donetick/donetick/releases/download/v0.1.89/donetick_Linux_arm64.tar.gz"
+    arm64.sha256 = "32bb87130af5cc4982b0c5b71de77ff8b1914b7bd6b8fdde3a7c3c68c57846e9"
+    armhf.url = "https://github.com/donetick/donetick/releases/download/v0.1.89/donetick_Linux_armv7.tar.gz"
+    armhf.sha256 = "feef860347a72328bab4e5747de47270a48a2d63f049ad474fc51c9e70622456"
 
     autoupdate.strategy = "latest_github_release"
     autoupdate.asset.amd64 = "^donetick_Linux_x86_64.tar.gz$"
